@@ -2,16 +2,33 @@
 
 Minimal reproduction for `npx sanity blueprints deploy` timing out during "Processing function assets".
 
+Uses the same `skill` schema and delta GROQ filter as `sanity-labs/internal-skills` against project `vj3v4j95` (dataset `production`).
+
 ## Steps to reproduce
 
-1. Clone this repo
-2. `npm install`
-3. `npx sanity blueprints init . --blueprint-type ts --project-id vj3v4j95 --stack-name repro`
-4. `npx sanity blueprints deploy`
+```bash
+git clone git@github.com:sanity-labs/functions-repro.git
+cd functions-repro
+npm install
+
+# Create the blueprint config (skip `init` — it conflicts with existing sanity.blueprint.ts)
+mkdir -p .sanity
+cat > .sanity/blueprint.config.json << 'EOF'
+{
+  "blueprintConfigVersion": "v2025-05-08",
+  "projectId": "vj3v4j95",
+  "stackId": "ST-yqcbmgmutk",
+  "organizationId": "oSyH1iET5"
+}
+EOF
+
+# Deploy
+npx sanity blueprints deploy
+```
 
 ## Expected
 
-Deploy completes successfully. Publishing a `skill` document in project `vj3v4j95` triggers the function and logs the event.
+Deploy completes. Publishing a `skill` document triggers the function and logs the skill name.
 
 ## Actual
 
