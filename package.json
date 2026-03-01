@@ -1,0 +1,9 @@
+{
+  "name": "functions-repro",
+  "private": true,
+  "dependencies": {
+    "@sanity/blueprints": "^0.12.2",
+    "@sanity/client": "^7.16.0",
+    "@sanity/functions": "^1.2.0"
+  }
+}
