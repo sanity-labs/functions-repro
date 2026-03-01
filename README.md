@@ -2,8 +2,6 @@
 
 Minimal reproduction for `npx sanity blueprints deploy` timing out during "Processing function assets".
 
-Uses the same `skill` schema and delta GROQ filter as `sanity-labs/internal-skills` so you can test the trigger via Sanity MCP against project `vj3v4j95` (dataset `production`).
-
 ## Steps to reproduce
 
 1. Clone this repo
@@ -13,21 +11,13 @@ Uses the same `skill` schema and delta GROQ filter as `sanity-labs/internal-skil
 
 ## Expected
 
-Deploy completes. Publishing a skill in the Studio (or via MCP) triggers the function and logs the skill name.
+Deploy completes successfully. Publishing a `skill` document in project `vj3v4j95` triggers the function and logs the event.
 
 ## Actual
 
 Deploy hangs at "Processing function assets" and times out after 60 seconds.
 
 With `DEBUG=*`, the timeout occurs during the `@architect/hydrate` step that installs dependencies in the Vite/Rollup output directory. The build uses `external: [/node_modules/]` (dependencies are not bundled), then relies on hydration to install them — that hydration step is what times out.
-
-## Testing the trigger (after deploy works)
-
-Publish any skill document in project `vj3v4j95`:
-- Via Studio: https://skills-studio.sanity.studio/
-- Via MCP: patch a skill's `content` field and publish
-
-The function should log the skill name and reference count.
 
 ## Environment
 
